@@ -136,7 +136,6 @@ const ProductsPage = () => {
       if (sortBy) params.set('sort_by', sortBy);
       if (sortDir) params.set('sort_dir', sortDir);
 
-      // استدعاء الداتا عن طريق الـ Context
       getProducts(params.toString());
    }, [search, minPrice, maxPrice, categoryId, sortBy, sortDir]);
 

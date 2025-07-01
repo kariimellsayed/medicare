@@ -8,7 +8,6 @@ import { Button } from '@/shared/components/ui/button';
 
 import Header from '@/features/store/components/header';
 import ProductGrid from '@/features/store/components/product-grid';
-import { Input } from '@/features/store/components/ui/input';
 import { AuthContext } from '@/features/store/context/auth-context';
 import { Category, Product } from '@/features/store/types/index';
 import onAxios from '@/features/store/utils';
@@ -39,7 +38,7 @@ const getCategories = ({ setDataCategories, setLoading, setError }: Props) => {
 };
 
 const Index = () => {
-   const [searchQuery, setSearchQuery] = useState('');
+   // const [searchQuery, setSearchQuery] = useState('');
 
    const [dataCategories, setDataCategories] = useState<Category[]>([]);
    const [loading, setLoading] = useState(true);
@@ -89,7 +88,7 @@ const Index = () => {
          </section>
 
          {/* Search Bar */}
-         <section className='bg-white py-8 shadow-md'>
+         {/* <section className='bg-white py-8 shadow-md'>
             <div className='container mx-auto px-4'>
                <form
                   // onSubmit={handleSearch}
@@ -108,7 +107,7 @@ const Index = () => {
                   </Button>
                </form>
             </div>
-         </section>
+         </section> */}
 
          {/* Categories Section */}
          <section className='py-12'>
