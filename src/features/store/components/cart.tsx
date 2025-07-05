@@ -159,6 +159,8 @@ const Cart = () => {
          .finally(() => setOrderLoading(false));
    };
 
+   console.log(dataCarts);
+
    if (dataCarts.length === 0) {
       return (
          <div className='flex flex-col items-center justify-center py-12'>

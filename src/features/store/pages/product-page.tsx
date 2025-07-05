@@ -252,8 +252,8 @@ const ProductsPage = () => {
                         onChange={(value) => setSortBy(value)}
                      >
                         <Option value='price'>Sort by Price</Option>
-                        <Option value='name'>Sort by Name</Option>
-                        <Option value='created_at'>Newest</Option>
+                        {/* <Option value='name'>Sort by Name</Option>
+                        <Option value='created_at'>Newest</Option> */}
                      </Select>
 
                      {/* Sort Direction */}
