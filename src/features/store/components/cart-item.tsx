@@ -8,9 +8,6 @@ import { Button } from '@/shared/components/ui/button';
 import { AuthContext } from '@/features/store/context/auth-context';
 import onAxios from '@/features/store/utils';
 
-// import { Product } from "@/data/products";
-// import { useCart } from '@/hooks/useCart';
-
 interface Product {
    id: number;
    imageSrc?: string;
@@ -25,32 +22,14 @@ interface CartItemProps {
 }
 
 const CartItem = ({ product, quantity }: CartItemProps) => {
-   // const { updateQuantity, removeItem } = useCart();
-   // const [quantity, setQuantity] = useState(initialQuantity);
    const [currentQuantity, setCurrentQuantity] = useState<number>(quantity);
    const [deleting, setDeleting] = useState<boolean>(false);
+   const [imageError, setImageError] = useState(false); // ✅ حالة فشل الصورة
 
    const { getCarts } = useContext(AuthContext) as { getCarts: () => void };
 
-   // const handleQuantityChange = (delta: number) => {
-   //   const newQuantity = quantity + delta;
-   //   if (newQuantity > 0) {
-   //     updateQuantity(product.id, newQuantity);
-   //   } else {
-   //     removeItem(product.id);
-   //   }
-   // };
-
-   // Calculate discounted price if applicable
-   // const price = product.discountPercentage
-   //   ? product.price * (1 - product.discountPercentage / 100)
-   //   : product.price;
-
-   // const itemTotal = price * quantity;
-
-   // Delete Cart
    const deleteCart = (id: number) => {
-      setDeleting(true); // يبدأ التحميل
+      setDeleting(true);
       onAxios
          .delete(`/api/e-commerce/cart/destroy/${id}`)
          .then(() => {
@@ -68,22 +47,9 @@ const CartItem = ({ product, quantity }: CartItemProps) => {
          });
    };
 
-   // const handleQuantityChange = (delta) => {
-   //   setQuantity((prev) => {
-   //     const newQuantity = prev + delta;
-   //     if (newQuantity < 1) return 1; // منع الكمية من أن تكون أقل من 1
-   //     return newQuantity;
-   //   });
-   // };
-
-   // console.log(product);
-   // Update Cart
-
    const updateCart = (id: number, newQuantity: number) => {
       onAxios
-         .put(`/api/e-commerce/cart/update/${id}`, {
-            quantity: newQuantity,
-         })
+         .put(`/api/e-commerce/cart/update/${id}`, { quantity: newQuantity })
          .then(() => {
             getCarts();
             message.success(
@@ -106,13 +72,19 @@ const CartItem = ({ product, quantity }: CartItemProps) => {
 
    return (
       <div className='flex border-b py-6'>
-         {/* Product image */}
-         <div className='h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border'>
-            <img
-               src={product.imageSrc}
-               alt={product.name}
-               className='h-full w-full object-contain object-center'
-            />
+         <div className='flex h-24 w-24 flex-shrink-0 items-center justify-center overflow-hidden rounded-md border bg-gray-100'>
+            {!imageError ? (
+               <img
+                  src={product.imageSrc}
+                  alt={product.name}
+                  className='h-full w-full object-contain object-center'
+                  onError={() => setImageError(true)}
+               />
+            ) : (
+               <div className='flex h-full w-full items-center justify-center text-2xl font-bold text-gray-500'>
+                  {product.name?.charAt(0).toUpperCase() || '?'}
+               </div>
+            )}
          </div>
 
          {/* Product details */}
@@ -137,7 +109,6 @@ const CartItem = ({ product, quantity }: CartItemProps) => {
                      {deleting ? <Spin size='small' /> : <X size={16} />}
                   </Button>
                </div>
-               {/* <p className="mt-1 text-sm text-gray-500">{product.brand}</p> */}
             </div>
             <div className='flex flex-1 items-end justify-between text-sm'>
                <div className='flex items-center'>
@@ -168,16 +139,6 @@ const CartItem = ({ product, quantity }: CartItemProps) => {
                   <p className='font-medium text-gray-900'>
                      EGP {(product.price * currentQuantity).toFixed(2)}
                   </p>
-                  {/* {product.discountPercentage && (
-              <p className="text-xs text-gray-500">
-                <span className="line-through">
-                  EGP {(product.price * quantity).toFixed(2)}
-                </span>
-                <span className="ml-1 text-red-500">
-                  Save {product.discountPercentage}%
-                </span>
-              </p>
-            )} */}
                </div>
             </div>
          </div>
