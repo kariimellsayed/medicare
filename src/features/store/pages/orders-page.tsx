@@ -71,7 +71,6 @@ const OrdersPage = () => {
          .get<OrderHistoryResponse>(url)
          .then((res) => {
             setOrders(res.data.data);
-            console.log(res.data.data);
             setMeta({
                current: Array.isArray(res.data.meta.current_page)
                   ? res.data.meta.current_page[0]

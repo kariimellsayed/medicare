@@ -45,7 +45,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
          .then((res) => {
             setDataCarts(res.data.data);
             setCartMeta(res.data.meta);
-            // console.log("Cart fetched:", res.data);
          })
          .catch((err) => {
             console.error('Error fetching cart:', err);

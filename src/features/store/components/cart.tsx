@@ -23,6 +23,7 @@ const Cart = () => {
    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
    const [address, setAddress] = useState<string>('');
    const [phone, setPhone] = useState<string>('');
+   const [phoneError, setPhoneError] = useState<string>('');
    const [orderSuccess, setOrderSuccess] = useState<boolean>(false);
 
    interface CartData {
@@ -124,8 +125,15 @@ const Cart = () => {
    // };
 
    const handleCreateOrder = () => {
+      setPhoneError('');
+
       if (!address.trim()) {
          return message.warning('Please enter an address.');
+      }
+
+      if (phone.length !== 11) {
+         setPhoneError('Phone number must be exactly 11 digits.');
+         return;
       }
 
       const productsPayload = dataCarts.map((item) => ({
@@ -148,6 +156,8 @@ const Cart = () => {
             setOrderSuccess(true);
             clearCart();
             setAddress('');
+            setPhone('');
+            setPhoneError('');
             message.success('Order placed successfully!');
             setTimeout(() => {
                setIsModalOpen(false);
@@ -160,8 +170,6 @@ const Cart = () => {
          })
          .finally(() => setOrderLoading(false));
    };
-
-   console.log(dataCarts);
 
    if (dataCarts.length === 0) {
       return (
@@ -252,37 +260,6 @@ const Cart = () => {
             </div>
          </div>
 
-         {/* <Modal
-            title='Confirm Order'
-            open={isModalOpen}
-            onCancel={() => {
-               setIsModalOpen(false);
-               setAddress('');
-            }}
-            onOk={handleCreateOrder}
-            confirmLoading={orderLoading}
-         >
-            <div className='space-y-4'>
-               <div>
-                  <label className='block text-sm font-medium text-gray-700'>
-                     Total Price
-                  </label>
-                  <Input value={cartMeta.total_price} disabled />
-               </div>
-
-               <div>
-                  <label className='block text-sm font-medium text-gray-700'>
-                     Address
-                  </label>
-                  <Input
-                     placeholder='Enter shipping address'
-                     value={address}
-                     onChange={(e) => setAddress(e.target.value)}
-                  />
-               </div>
-            </div>
-         </Modal> */}
-
          <Modal
             title={orderSuccess ? 'Order Placed' : 'Confirm Order'}
             open={isModalOpen}
@@ -336,12 +313,18 @@ const Cart = () => {
                         type='text'
                         inputMode='numeric'
                         pattern='[0-9]*'
-                        placeholder='Enter Phone Number'
+                        placeholder='Enter Phone Number (11 digits)'
                         value={phone}
-                        onChange={(e) =>
-                           setPhone(e.target.value.replace(/\D/g, ''))
-                        }
+                        onChange={(e) => {
+                           setPhone(e.target.value.replace(/\D/g, ''));
+                           setPhoneError('');
+                        }}
                      />
+                     {phoneError && (
+                        <p className='mt-1 text-sm text-red-500'>
+                           {phoneError}
+                        </p>
+                     )}
                   </div>
 
                   {/* Cash on Delivery with static radio */}

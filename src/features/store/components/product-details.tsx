@@ -71,8 +71,6 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
          });
    };
 
-   // console.log(product);
-
    return (
       <div className='container mx-auto px-4 py-8'>
          <div className='mb-10 grid grid-cols-1 gap-8 md:grid-cols-2'>

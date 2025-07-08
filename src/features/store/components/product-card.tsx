@@ -69,8 +69,6 @@ const ProductCard = ({
          })
          .then(() => {
             getCarts();
-            // setDataCarts(res.data.data);
-            // console.log(res.data.data);
             message.success('The Product Added To Cart');
          })
          .catch((err) => {

@@ -33,7 +33,6 @@ const ProductDetailPage = () => {
          .get(`/api/e-commerce/products/${id}`)
          .then((res) => {
             setDataProduct(res.data.data);
-            console.log(res.data);
          })
          .catch((err) => {
             console.log(err);
@@ -49,8 +48,6 @@ const ProductDetailPage = () => {
          <Spin size='large' tip='Loading category...' />
       </div>;
    }
-
-   console.log(dataProduct);
 
    return (
       <div className='flex min-h-screen flex-col'>
