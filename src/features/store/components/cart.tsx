@@ -22,6 +22,7 @@ const Cart = () => {
    const [orderLoading, setOrderLoading] = useState<boolean>(false);
    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
    const [address, setAddress] = useState<string>('');
+   const [phone, setPhone] = useState<string>('');
    const [orderSuccess, setOrderSuccess] = useState<boolean>(false);
 
    interface CartData {
@@ -137,6 +138,7 @@ const Cart = () => {
          products: productsPayload,
          total_price: cartMeta.total_price,
          address,
+         phone,
       };
 
       setOrderLoading(true);
@@ -326,8 +328,23 @@ const Cart = () => {
                         onChange={(e) => setAddress(e.target.value)}
                      />
                   </div>
+                  <div>
+                     <label className='block text-sm font-medium text-gray-700'>
+                        Phone Number
+                     </label>
+                     <Input
+                        type='text'
+                        inputMode='numeric'
+                        pattern='[0-9]*'
+                        placeholder='Enter Phone Number'
+                        value={phone}
+                        onChange={(e) =>
+                           setPhone(e.target.value.replace(/\D/g, ''))
+                        }
+                     />
+                  </div>
 
-                  {/* ✅ Cash on Delivery with static radio */}
+                  {/* Cash on Delivery with static radio */}
                   <div className='flex items-center gap-2 pt-2'>
                      <input
                         type='radio'

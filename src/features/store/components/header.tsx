@@ -1,11 +1,11 @@
 import { useContext, useState } from 'react';
 
-import { Menu, Search, ShoppingCart, X } from 'lucide-react';
+import { Menu, ShoppingCart, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-import { Button } from '@/shared/components/ui/button';
+// import { Button } from '@/shared/components/ui/button';
 
-import { Input } from '@/features/store/components/ui/input';
+// import { Input } from '@/features/store/components/ui/input';
 import { AuthContext } from '@/features/store/context/auth-context';
 
 const Header = ({ onSearch }: { onSearch?: (query: string) => void }) => {
@@ -16,12 +16,12 @@ const Header = ({ onSearch }: { onSearch?: (query: string) => void }) => {
    const { dataCarts, setDataCarts, setCartMeta, isLoggedIn, setIsLoggedIn } =
       context;
 
-   const handleSearch = (e: React.FormEvent) => {
-      e.preventDefault();
-      if (onSearch) {
-         onSearch(searchQuery);
-      }
-   };
+   // const handleSearch = (e: React.FormEvent) => {
+   //    e.preventDefault();
+   //    if (onSearch) {
+   //       onSearch(searchQuery);
+   //    }
+   // };
 
    const toggleMenu = () => {
       setIsMenuOpen(!isMenuOpen);
@@ -59,10 +59,18 @@ const Header = ({ onSearch }: { onSearch?: (query: string) => void }) => {
                   >
                      Products
                   </Link>
+                  {isLoggedIn && (
+                     <Link
+                        to='/store/orders'
+                        className='text-gray-700 hover:text-brand-blue'
+                     >
+                        My Orders
+                     </Link>
+                  )}
                </nav>
 
                {/* Search (Desktop) */}
-               {onSearch && (
+               {/* {onSearch && (
                   <form
                      onSubmit={handleSearch}
                      className='hidden items-center overflow-hidden rounded-full border bg-gray-50 md:flex'
@@ -83,7 +91,7 @@ const Header = ({ onSearch }: { onSearch?: (query: string) => void }) => {
                         <Search size={20} />
                      </Button>
                   </form>
-               )}
+               )} */}
 
                {/* Cart & Mobile Menu Toggle */}
                <div className='flex items-center space-x-4'>
@@ -158,7 +166,7 @@ const Header = ({ onSearch }: { onSearch?: (query: string) => void }) => {
                   </nav>
 
                   {/* Search (Mobile) */}
-                  {onSearch && (
+                  {/* {onSearch && (
                      <form
                         onSubmit={handleSearch}
                         className='mt-4 flex items-center overflow-hidden rounded-full border bg-gray-50'
@@ -179,7 +187,7 @@ const Header = ({ onSearch }: { onSearch?: (query: string) => void }) => {
                            <Search size={20} />
                         </Button>
                      </form>
-                  )}
+                  )} */}
                </div>
             )}
          </div>

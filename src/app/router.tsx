@@ -4,6 +4,7 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import ErrorBoundary from '@/shared/components/error-boundary';
 
+import OrdersPage from '@/features/store/pages/orders-page';
 import StoreProvider from '@/features/store/provider';
 
 const MainLayout = lazy(() => import('@/app/layouts/main-layout'));
@@ -88,6 +89,10 @@ export const router = createBrowserRouter([
                {
                   path: 'cart',
                   element: <CartPage />,
+               },
+               {
+                  path: 'orders',
+                  element: <OrdersPage />,
                },
             ],
          },
